@@ -9,22 +9,6 @@ interface ICreateBlock extends Omit<Block['header'], 'nonce' | 'rootHash'> {
   transactions: Transaction[];
 }
 
-export const buildGenesisBlock = (difficult: number): Block => {
-  const transactions = [
-    createTransaction({
-      reciver: minerAddress,
-      amount: 0,
-      coinbase: true,
-    }),
-  ];
-  const genesisBlock = buildBlock({
-    previousHash: '0',
-    transactions,
-  });
-  mineBlock(genesisBlock, difficult);
-  return genesisBlock;
-};
-
 export const buildBlock = ({
   previousHash,
   transactions,
@@ -57,7 +41,7 @@ export const buildBlock = ({
   return block;
 };
 
-const calculateBlockHash = ({
+export const calculateBlockHash = ({
   rootHash,
   previousHash,
   nonce,
